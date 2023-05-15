@@ -3,6 +3,8 @@ using CarConnectContracts.BindingModels;
 using CarConnectContracts.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Xml.Linq;
+
 
 namespace CarConnect.Controllers
 {
@@ -96,20 +98,38 @@ namespace CarConnect.Controllers
         }
 
         [HttpPost]
-        public void CarCreate(string Brand, string Model, DateTime Year, string VIN, string LicensePlate, string Colour, byte Photo)
+        public void CarCreate(string Brand, string Model, int Year,
+            string VIN, string LicensePlate, string Colour, IFormFile Files)
         {
             if (!string.IsNullOrEmpty(Brand))
             {
-                APIClient.PostRequest("api/car/createorupdatecar", new CarBindingModel
-                {
+                DateTime date = new DateTime(Year, 1, 1);
+                //Getting FileName
+                var fileName = Path.GetFileName(Files.FileName);
+                //Getting file Extension
+                var fileExtension = Path.GetExtension(fileName);
+                // concatenating  FileName + FileExtension
+                var newFileName = String.Concat(Convert.ToString(Guid.NewGuid()), fileExtension);
+
+                CarBindingModel car = new CarBindingModel {
                     Brand = Brand,
                     Model = Model,
-                    Year = Year,
+                    Year = date,
                     VIN = VIN,
                     LicensePlate = LicensePlate,
                     Colour = Colour,
-                    Photo = Photo
-                });
+                    Name = newFileName,
+                    FileType = fileExtension
+                };
+                using (var target = new MemoryStream())
+                {
+                    Files.CopyTo(target);
+                    car.DataFiles = target.ToArray();
+                }
+
+                APIClient.PostRequest("api/car/createorupdatecar", car);
+
+                
                 Response.Redirect("Index");
                 return;
             }
@@ -124,27 +144,41 @@ namespace CarConnect.Controllers
         }
 
         [HttpPost]
-        public void CarUpdate(int carId, string Brand, string Model, DateTime Year, string VIN, string LicensePlate, string Colour, byte Photo)
+        public void CarUpdate(int carId, string Brand, string Model, int Year, 
+            string VIN, string LicensePlate, string Colour, IFormFile Files)
         {
             if(!string.IsNullOrEmpty(Brand))
             {
+                DateTime date = new DateTime(Year, 1, 1);
                 var car = APIClient.GetRequest<CarViewModel>($"api/car/getcar?carId={carId}");
                 if (car == null)
                 {
                     return;
                 }
-                APIClient.PostRequest("api/car/createorupdatecar", new CarBindingModel
+                //Getting FileName
+                var fileName = Path.GetFileName(Files.FileName);
+                //Getting file Extension
+                var fileExtension = Path.GetExtension(fileName);
+                // concatenating  FileName + FileExtension
+                var newFileName = String.Concat(Convert.ToString(Guid.NewGuid()), fileExtension);
+                CarBindingModel newcar = new CarBindingModel
                 {
-                    Id = car.Id,
                     Brand = Brand,
                     Model = Model,
-                    Year = Year,
+                    Year = date,
                     VIN = VIN,
                     LicensePlate = LicensePlate,
                     Colour = Colour,
-                    Photo = Photo
-                           
-                });
+                    Name = newFileName,
+                    FileType = fileExtension
+                };
+                using (var target = new MemoryStream())
+                {
+                    Files.CopyTo(target);
+                    car.DataFiles = target.ToArray();
+                }
+
+                APIClient.PostRequest("api/car/createorupdatecar", newcar);
                 Response.Redirect("Cars");
                 return;
             }

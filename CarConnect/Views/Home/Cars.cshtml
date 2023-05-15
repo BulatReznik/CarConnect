@@ -73,11 +73,10 @@
                                                 @Html.DisplayFor(modelItem => item.VIN)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.Photo)
+                                                <img src="data:image;base64,@System.Convert.ToBase64String(item.DataFiles)" width="250" height="180" />
                                             </td>
                                             <td>
                                                 <a class="btn btn-primary btn-sm mr-0" asp-action="CarUpdate" asp-route-carId="@item.Id" asp-route-carBrand="@item.Brand" asp-route-carModel="@item.Model">Изменить</a>
-                                            
                                                 <a class="btn btn-danger btn-sm ml-0" asp-action="CarDelete" asp-route-carId="@item.Id">Удалить</a>
                                             </td>
 

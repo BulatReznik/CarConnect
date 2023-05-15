@@ -1,6 +1,7 @@
-﻿@{
+﻿﻿@{
     ViewData["Title"] = "Добавление автомобиля";
 }
+
 
 
 <body>
@@ -9,22 +10,22 @@
             <div class="card card-4">
                 <div class="card-body">
                     <h2 class="title text-center">Добавить машину</h2>
-                        <form method="post">
+                    <form method="post" enctype="multipart/form-data">
 
                             <div class="form-group mt-3">
-                            <label for="Brand">Марка автомобиля:</label>
-                            <input type="text" class="form-control" name="Brand" id="Brand">
+                                <label for="Brand">Марка автомобиля:</label>
+                                <input type="text" class="form-control" name="Brand" id="Brand">
                             </div>
 
                             <div class="form-group mt-3">
-                            <label for="Model">Модель автомобиля:</label>
-                            <input type="text" class="form-control" name="Model" id="Model">
+                                <label for="Model">Модель автомобиля:</label>
+                                <input type="text" class="form-control" name="Model" id="Model">
                             </div>
 
                             <div class="form-group mt-3">
-                            <label for="Year">Дата выпуска автомобиля:</label>
-                            <input type="date" class="form-control" name="Year" id="Year" max="@DateTime.Now.ToString("yyyy")-01-01" min="1900-01-01" value="yyyy-01-01">
-                            </div>
+                                <label for="Year">Дата выпуска автомобиля:</label>
+                                <input type="number" class="form-control" name="Year" id="Year" min="1900" max="@DateTime.Now.Year" value="yyyy">
+                             </div>
 
                             <div class="form-group mt-3">
                                 <label for="VIN">VIN номер автомобиля:</label>
@@ -32,8 +33,8 @@
                             </div>
 
                             <div class="form-group mt-3">
-                            <label for="LicensePlate">Номерной знак автомобиля:</label>
-                            <input type="text" class="form-control" name="LicensePlate" id="LicensePlate">
+                                <label for="LicensePlate">Номерной знак автомобиля:</label>
+                                <input type="text" class="form-control" name="LicensePlate" id="LicensePlate">
                             </div>
 
                             <div class="form-group mt-3">
@@ -42,16 +43,14 @@
                             </div>
 
                             <div class="form-group mt-3">
-                            <label for="Photo">Фотография автомобиля:</label>
-                                <div class="custom-file" style="background-color: #d9edf7; border-radius: 10px; padding: 5px;">
-                                <input type="file" class="custom-file-input" name="Photo" id="Photo">
-                                <label class="custom-file-label" for="Photo"></label>
-                                </div>
+                                <label for="Files">Фото автомобиля:</label>
+                                <input type="file" class="form-control" name="Files" id="Files">
                             </div>
 
                             <div class="form-group mt-3">
                                 <img id="preview" style="max-width: 400px; max-height: 400px; margin-top: 10px;" />
                             </div>
+
 
                             <div class="mt-3">
                                 <input type="submit" value="Добавить" class="btn btn-success">
@@ -60,7 +59,8 @@
                             <div class="mt-3">
                                 <a class="btn btn-primary" asp-action="Index">Отмена</a>
                             </div>
-                        </form>
+                           
+                    </form>
                 </div>
             </div>
         </div>
@@ -70,20 +70,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script>
-            function readURL(input) {
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
 
-                    reader.onload = function (e) {
-                        $('#preview').attr('src', e.target.result);
-                    }
-
-                    reader.readAsDataURL(input.files[0]);
+                reader.onload = function (e) {
+                    $('#preview').attr('src', e.target.result);
                 }
+
+                reader.readAsDataURL(input.files[0]);
             }
-        $("#Photo").change(function () {
+        }
+
+        $("#Files").change(function () {
             readURL(this);
         });
     </script>
 </body>
-
