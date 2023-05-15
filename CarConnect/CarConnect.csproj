@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.13" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CarConnectBusinessLogic\CarConnectBusinessLogic.csproj" />
+    <ProjectReference Include="..\CarConnectContracts\CarConnectContracts.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\css\main.css" />
+    <None Include="wwwroot\images\url2.jpg" />
+    <None Include="wwwroot\js\global.js" />
+    <None Include="wwwroot\vendor\datepicker\daterangepicker.css" />
+    <None Include="wwwroot\vendor\datepicker\daterangepicker.js" />
+    <None Include="wwwroot\vendor\datepicker\moment.min.js" />
+    <None Include="wwwroot\vendor\font-awesome-4.7\css\font-awesome.css" />
+    <None Include="wwwroot\vendor\font-awesome-4.7\css\font-awesome.min.css" />
+    <None Include="wwwroot\vendor\font-awesome-4.7\fonts\fontawesome-webfont.eot" />
+    <None Include="wwwroot\vendor\font-awesome-4.7\fonts\fontawesome-webfont.svg" />
+    <None Include="wwwroot\vendor\font-awesome-4.7\fonts\fontawesome-webfont.ttf" />
+    <None Include="wwwroot\vendor\font-awesome-4.7\fonts\fontawesome-webfont.woff" />
+    <None Include="wwwroot\vendor\font-awesome-4.7\fonts\fontawesome-webfont.woff2" />
+    <None Include="wwwroot\vendor\font-awesome-4.7\fonts\FontAwesome.otf" />
+    <None Include="wwwroot\vendor\font-awesome-4.7\HELP-US-OUT.txt" />
+    <None Include="wwwroot\vendor\jquery\jquery.js" />
+    <None Include="wwwroot\vendor\jquery\jquery.min.js" />
+    <None Include="wwwroot\vendor\mdi-font\css\material-design-iconic-font.css" />
+    <None Include="wwwroot\vendor\mdi-font\css\material-design-iconic-font.min.css" />
+    <None Include="wwwroot\vendor\mdi-font\fonts\Material-Design-Iconic-Font.eot" />
+    <None Include="wwwroot\vendor\mdi-font\fonts\Material-Design-Iconic-Font.svg" />
+    <None Include="wwwroot\vendor\mdi-font\fonts\Material-Design-Iconic-Font.ttf" />
+    <None Include="wwwroot\vendor\mdi-font\fonts\Material-Design-Iconic-Font.woff" />
+    <None Include="wwwroot\vendor\mdi-font\fonts\Material-Design-Iconic-Font.woff2" />
+    <None Include="wwwroot\vendor\select2\select2.min.css" />
+    <None Include="wwwroot\vendor\select2\select2.min.js" />
+  </ItemGroup>
+
+</Project>

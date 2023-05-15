@@ -1,0 +1,28 @@
+﻿@using CarConnectContracts.ViewModels
+
+@{
+    ViewData["Title"] = "Главная";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/index.css">
+</head>
+
+<div class="page-wrapper bg-gra-02 p-t-100 p-b-150 font-robo">
+    <div class="wrapper wrapper--w960">
+        <div class="card card-1">
+            <div class="card-body">
+                <div class="photo-grid">
+                    @for (int i = 1; i <= 25; i++)
+                    {
+                         <div class="photo-tile">
+                            <img src="@Url.Content("~/images/url" + i + ".jpg")" alt="Photo @(i)" />
+                        </div>
+                    }
+                </div>  
+            </div>
+        </div>
+    </div>
+</div>
+
+

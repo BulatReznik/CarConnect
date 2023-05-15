@@ -1,0 +1,94 @@
+﻿@using CarConnectContracts.ViewModels
+
+@model List<CarViewModel>
+
+@{
+    ViewData["Title"] = "Автомобили";
+}
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+</head>
+
+<body>
+    <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-robo">
+        <div class="wrapper wrapper--w970">
+            <div class="card card-4">
+                <div class="card-body">
+                    <div class="text-center">
+                        @{
+                            <p>
+                                <a class="btn btn-success" asp-action="CarCreate">
+                                    <i class="fas fa-car"></i> Добавить авто
+                                </a>
+                            </p>
+
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Номер
+                                        </th>
+                                        <th>
+                                            Бренд
+                                        </th>
+                                        <th>
+                                            Модель
+                                        </th>
+                                        <th>
+                                            Год
+                                        </th>
+                                        <th>
+                                            Цвет
+                                        </th>
+                                        <th>
+                                           VIN-номер
+                                        </th>
+                                        <th>
+                                            Фото
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.LicensePlate)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Brand)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Model)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Year.Year)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Colour)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.VIN)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Photo)
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-primary btn-sm mr-0" asp-action="CarUpdate" asp-route-carId="@item.Id" asp-route-carBrand="@item.Brand" asp-route-carModel="@item.Model">Изменить</a>
+                                            
+                                                <a class="btn btn-danger btn-sm ml-0" asp-action="CarDelete" asp-route-carId="@item.Id">Удалить</a>
+                                            </td>
+
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
