@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarConnectDataBase.Migrations
 {
     [DbContext(typeof(CarConnectDataBase))]
-    [Migration("20230515200142_4")]
-    partial class _4
+    [Migration("20230515231415_5")]
+    partial class _5
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,11 +41,7 @@ namespace CarConnectDataBase.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("DataFiles")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<string>("FileType")
-                        .IsRequired()
+                    b.Property<string>("FileName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LicensePlate")
@@ -56,7 +52,7 @@ namespace CarConnectDataBase.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Path")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("VIN")

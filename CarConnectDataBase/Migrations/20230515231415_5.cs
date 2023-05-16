@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CarConnectDataBase.Migrations
 {
     /// <inheritdoc />
-    public partial class _4 : Migration
+    public partial class _5 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -23,9 +23,8 @@ namespace CarConnectDataBase.Migrations
                     VIN = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LicensePlate = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Colour = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DataFiles = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FileType = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    FileName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Path = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

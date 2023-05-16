@@ -3,6 +3,7 @@ using CarConnectContracts.BindingModels;
 using CarConnectContracts.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.IO;
 using System.Xml.Linq;
 
 
@@ -36,7 +37,7 @@ namespace CarConnect.Controllers
         {
             return View();
         }
-        
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
@@ -97,43 +98,41 @@ namespace CarConnect.Controllers
             return View(APIClient.GetRequest<List<CarViewModel>>($"api/car/getcarlist"));
         }
 
-        [HttpPost]
-        public void CarCreate(string Brand, string Model, int Year,
-            string VIN, string LicensePlate, string Colour, IFormFile Files)
+        public IActionResult UserCars()
         {
-            if (!string.IsNullOrEmpty(Brand))
-            {
-                DateTime date = new DateTime(Year, 1, 1);
-                //Getting FileName
-                var fileName = Path.GetFileName(Files.FileName);
-                //Getting file Extension
-                var fileExtension = Path.GetExtension(fileName);
-                // concatenating  FileName + FileExtension
-                var newFileName = String.Concat(Convert.ToString(Guid.NewGuid()), fileExtension);
+            return View(APIClient.GetRequest<List<CarViewModel>>($"api/car/getcarlist"));
+        }
 
-                CarBindingModel car = new CarBindingModel {
+        [HttpPost]
+        public async Task<IActionResult> CarCreate(string Brand, string Model, int Year,
+            string VIN, string LicensePlate, string Colour, IFormFile uploadedFile)
+        {
+            if (Year==null || uploadedFile==null)
+            {
+                DateTime date = new(Year, 1, 1);
+
+                // путь к папке Files
+                string path = "/Files/" + uploadedFile.FileName;
+                // сохраняем файл в папку Files в каталоге wwwroot
+                using (var fileStream = new FileStream(_environment.WebRootPath + path, FileMode.Create))
+                {
+                    await uploadedFile.CopyToAsync(fileStream);
+                }
+                CarBindingModel car = new CarBindingModel
+                {
                     Brand = Brand,
                     Model = Model,
                     Year = date,
                     VIN = VIN,
                     LicensePlate = LicensePlate,
                     Colour = Colour,
-                    Name = newFileName,
-                    FileType = fileExtension
+                    FileName = uploadedFile.FileName,
+                    Path = path
                 };
-                using (var target = new MemoryStream())
-                {
-                    Files.CopyTo(target);
-                    car.DataFiles = target.ToArray();
-                }
 
                 APIClient.PostRequest("api/car/createorupdatecar", car);
-
-                
-                Response.Redirect("Index");
-                return;
             }
-            throw new Exception("Вы пропустили поле");
+            return Redirect("Cars");
         }
 
         [HttpGet]
@@ -144,45 +143,39 @@ namespace CarConnect.Controllers
         }
 
         [HttpPost]
-        public void CarUpdate(int carId, string Brand, string Model, int Year, 
-            string VIN, string LicensePlate, string Colour, IFormFile Files)
+        public async Task<IActionResult> CarUpdate(int carId, string Brand, string Model, int Year,
+            string VIN, string LicensePlate, string Colour, IFormFile uploadedFile)
         {
-            if(!string.IsNullOrEmpty(Brand))
+            var car = APIClient.GetRequest<CarViewModel>($"api/car/getcar?carId={carId}");
+            if (car == null)
             {
-                DateTime date = new DateTime(Year, 1, 1);
-                var car = APIClient.GetRequest<CarViewModel>($"api/car/getcar?carId={carId}");
-                if (car == null)
-                {
-                    return;
-                }
-                //Getting FileName
-                var fileName = Path.GetFileName(Files.FileName);
-                //Getting file Extension
-                var fileExtension = Path.GetExtension(fileName);
-                // concatenating  FileName + FileExtension
-                var newFileName = String.Concat(Convert.ToString(Guid.NewGuid()), fileExtension);
-                CarBindingModel newcar = new CarBindingModel
-                {
-                    Brand = Brand,
-                    Model = Model,
-                    Year = date,
-                    VIN = VIN,
-                    LicensePlate = LicensePlate,
-                    Colour = Colour,
-                    Name = newFileName,
-                    FileType = fileExtension
-                };
-                using (var target = new MemoryStream())
-                {
-                    Files.CopyTo(target);
-                    car.DataFiles = target.ToArray();
-                }
-
-                APIClient.PostRequest("api/car/createorupdatecar", newcar);
-                Response.Redirect("Cars");
-                return;
+                return Redirect("Cars");
             }
-            throw new Exception("Вы ввели не все данные!");
+            if (uploadedFile != null) { 
+                DateTime date = new(Year, 1, 1);
+            // путь к папке Files
+            string path = "/Files/" + uploadedFile.FileName;
+            // сохраняем файл в папку Files в каталоге wwwroot
+            using (var fileStream = new FileStream(_environment.WebRootPath + path, FileMode.Create))
+            {
+                await uploadedFile.CopyToAsync(fileStream);
+            }
+            CarBindingModel newcar = new CarBindingModel
+            {
+                Id= carId,
+                Brand = Brand,
+                Model = Model,
+                Year = date,
+                VIN = VIN,
+                LicensePlate = LicensePlate,
+                Colour = Colour,
+                FileName = uploadedFile.FileName,
+                Path = path
+            };
+
+            APIClient.PostRequest("api/car/createorupdatecar", newcar);
+            }
+            return Redirect("Cars");
         }
 
         [HttpGet]
@@ -192,8 +185,6 @@ namespace CarConnect.Controllers
             APIClient.PostRequest("api/car/deletecar", car);
             Response.Redirect("Cars");
         }
-
-
 
 
     }

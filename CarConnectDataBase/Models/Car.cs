@@ -9,9 +9,8 @@
         public string VIN { get; set; }
         public string LicensePlate { get; set; }
         public string Colour { get; set; }
-        public byte[]? DataFiles { get; set; }
-        public string? Name { get; set; }
-        public string FileType { get; set; }
+        public string? FileName { get; set; }
+        public string? Path { get; set; }
 
     }
 }

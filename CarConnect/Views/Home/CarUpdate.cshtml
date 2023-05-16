@@ -4,61 +4,63 @@
 
 
 <body>
-    <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-robo">
+    <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-robo" onsubmit="return validateForm()">
         <div class="wrapper wrapper--w680">
             <div class="card card-4">
                 <div class="card-body">
                     <h2 class="title text-center">Обновить информацию об автомобиле</h2>
                     <form method="post" enctype="multipart/form-data">
+                        <div class="form-group required">
+                            <div class="form-group mt-3">
+                                <label for="Brand">Марка автомобиля:</label>
+                                <input type="text" class="form-control" name="Brand" id="Brand" value="@ViewBag.Car.Brand" required="required">
+                            </div>
 
-                        <div class="form-group mt-3">
-                            <label for="Brand">Марка автомобиля:</label>
-                            <input type="text" class="form-control" name="Brand" id="Brand" value="@ViewBag.Car.Brand">
+                            <div class="form-group mt-3">
+                                <label for="Model">Модель автомобиля:</label>
+                                <input type="text" class="form-control" name="Model" id="Model" value="@ViewBag.Car.Model">
+                            </div>
+
+                            <div class="form-group mt-3">
+                                    <label for="Year">Дата выпуска автомобиля:</label>
+                                <input type="number" class="form-control" name="Year" id="Year" min="1900" max="@DateTime.Now.Year" value="@ViewBag.Car.Year.Year" required="required">
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <label for="VIN">VIN номер автомобиля:</label>
+                                <input type="text" class="form-control" name="VIN" id="VIN" value="@ViewBag.Car.VIN" pattern=".{,17}" required title="17 симоволов" required="required">
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <label for="LicensePlate">Номерной знак автомобиля:</label>
+                                <input type="text" class="form-control" name="LicensePlate" id="LicensePlate" value="@ViewBag.Car.LicensePlate" pattern=".{8,9}" required title="8-9 симоволов" required="required">
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <label for="Colour">Цвет автомобиля:</label>
+                                <input type="text" class="form-control" name="Colour" id="Colour" value="@ViewBag.Car.Colour" required="required">
+                            </div>
+
+
+                            <div class="form-group mt-3">
+                                <label for="uploadedFile">Фото автомобиля:</label>
+                                <input type="file" class="form-control" name="uploadedFile" id="uploadedFile">
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <label for="uploadedFile">Фото автомобиля:</label>
+                                <img src="@ViewBag.Car.Path" alt="Фото автомобиля" width="200" required="required">
+                            </div>
+
+                            <div class="form-group mt-3">
+                                <img id="preview" style="max-width: 400px; max-height: 400px; margin-top: 10px;" />
+                            </div>
+
+                            <div class="mt-3 d-flex">
+                                <input type="submit" value="Изменить" class="btn btn-success me-2">
+                                <a class="btn btn-primary" asp-action="Index">Отмена</a>
+                            </div>
                         </div>
-
-                        <div class="form-group mt-3">
-                            <label for="Model">Модель автомобиля:</label>
-                            <input type="text" class="form-control" name="Model" id="Model" value="@ViewBag.Car.Model">
-                        </div>
-
-                        <div class="form-group mt-3">
-                                <label for="Year">Дата выпуска автомобиля:</label>
-                                <input type="number" class="form-control" name="Year" id="Year" min="1900" max="@DateTime.Now.Year" value="@ViewBag.Car.Year.Year">
-                        </div>
-
-                        <div class="form-group mt-3">
-                            <label for="VIN">VIN номер автомобиля:</label>
-                            <input type="text" class="form-control" name="VIN" id="VIN" value="@ViewBag.Car.VIN">
-                        </div>
-
-                        <div class="form-group mt-3">
-                            <label for="LicensePlate">Номерной знак автомобиля:</label>
-                            <input type="text" class="form-control" name="LicensePlate" id="LicensePlate" value="@ViewBag.Car.LicensePlate">
-                        </div>
-
-                        <div class="form-group mt-3">
-                            <label for="Colour">Цвет автомобиля:</label>
-                            <input type="text" class="form-control" name="Colour" id="Colour" value="@ViewBag.Car.Colour">
-                        </div>
-
-
-                        <div class="form-group mt-3">
-                            <label for="Files">Фото автомобиля:</label>
-                            <input type="file" class="form-control" name="Files" id="Files" value="@ViewBag.Car.Name">
-                        </div>
-
-                        <div class="form-group mt-3">
-                            <img id="preview" src="data:image;base64,@System.Convert.ToBase64String(ViewBag.Car.DataFiles)" width="400" height="400" />
-                        </div>
-
-                        <div class="mt-3">
-                            <input type="submit" value="Добавить" class="btn btn-success">
-                        </div>
-
-                        <div class="mt-3">
-                            <a class="btn btn-primary" asp-action="Index">Отмена</a>
-                        </div>
-
                     </form>
                 </div>
             </div>
@@ -81,9 +83,77 @@
             }
         }
 
-        $("#Photo").change(function () {
+        $("#uploadedFile").change(function () {
             readURL(this);
         });
+    </script>
+
+    <script>
+        function validateForm() {
+            // Проверка поля "Марка автомобиля"
+            var brandInput = document.getElementById('Brand');
+            var brand = brandInput.value.trim();
+            if (brand === '') {
+                alert("Пожалуйста, введите марку автомобиля.");
+                brandInput.focus();
+                return false;
+            }
+
+            // Проверка поля "Модель автомобиля"
+            var modelInput = document.getElementById('Model');
+            var model = modelInput.value.trim();
+            if (model === '') {
+                alert("Пожалуйста, введите модель автомобиля.");
+                modelInput.focus();
+                return false;
+            }
+
+            // Проверка поля "Дата выпуска автомобиля"
+            var yearInput = document.getElementById('Year');
+            var year = parseInt(yearInput.value);
+            if (isNaN(year) || year < 1900 || year > new Date().getFullYear()) {
+                alert("Пожалуйста, введите корректную дату выпуска автомобиля.");
+                yearInput.focus();
+                return false;
+            }
+
+            // Проверка поля "VIN номер автомобиля"
+            var vinInput = document.getElementById('VIN');
+            var vin = vinInput.value.trim();
+            if (vin === '') {
+                alert("Пожалуйста, введите VIN номер автомобиля.");
+                vinInput.focus();
+                return false;
+            }
+
+            // Проверка поля "Номерной знак автомобиля"
+            var licensePlateInput = document.getElementById('LicensePlate');
+            var licensePlate = licensePlateInput.value.trim();
+            if (licensePlate === '') {
+                alert("Пожалуйста, введите номерной знак автомобиля.");
+                licensePlateInput.focus();
+                return false;
+            }
+
+            // Проверка поля "Цвет автомобиля"
+            var colourInput = document.getElementById('Colour');
+            var colour = colourInput.value.trim();
+            if (colour === '') {
+                alert("Пожалуйста, введите цвет автомобиля.");
+                colourInput.focus();
+                return false;
+            }
+
+            // Проверка типа файла и размера
+            var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+            if (!allowedExtensions.exec(file.name)) {
+                alert("Недопустимый тип файла. Разрешены только изображения формата JPG, JPEG, PNG или GIF.");
+                fileInput.value = '';
+                return false;
+            }
+            // Все проверки пройдены, форма валидна
+            return true;
+        }
     </script>
 </body>
 

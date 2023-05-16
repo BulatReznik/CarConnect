@@ -61,9 +61,8 @@ namespace CarConnectDataBase.Implements
                     VIN= model.VIN,
                     LicensePlate= model.LicensePlate,
                     Colour = model.Colour,
-                    DataFiles = model.DataFiles,
-                    Name = model.Name,
-                    FileType= model.FileType,
+                    FileName = model.FileName,
+                    Path= model.Path,
 
                 };
                 context.Cars.Add(car);
@@ -121,9 +120,8 @@ namespace CarConnectDataBase.Implements
             car.VIN = model.VIN;
             car.Colour = model.Colour;
             car.LicensePlate = model.LicensePlate;
-            car.DataFiles = model.DataFiles;
-            car.Name = model.Name;
-            car.FileType = model.FileType;
+            car.FileName = model.FileName;
+            car.Path = model.Path;
             return car;
 
         }
@@ -138,9 +136,8 @@ namespace CarConnectDataBase.Implements
                 VIN = car.VIN,
                 LicensePlate = car.LicensePlate,
                 Colour = car.Colour,
-                DataFiles = car.DataFiles,
-                Name = car.Name,
-                FileType = car.FileType,
+                Name = car.FileName,
+                Path = car.Path,
             };
         }
     }
