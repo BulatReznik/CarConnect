@@ -6,6 +6,7 @@
     ViewData["Title"] = "Автомобили";
 }
 
+
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
@@ -37,9 +38,18 @@
 <body>
     <div class="text-center">
         <div class="btn-group">
-            <a class="btn btn-success mx-2 mb-3 text-nowrap" asp-action="CarCreate">
-                <i class="fas fa-car"></i> Добавить авто
-            </a>
+            @if (Program.User == null)
+            {
+                <a class="btn btn-success mx-2 mb-3 text-nowrap" asp-action="Enter">
+                    <i class="fas fa-car"></i> Добавить авто
+                </a>
+            }
+            else
+            {
+                <a class="btn btn-success mx-2 mb-3 text-nowrap" asp-action="CarCreate">
+                    <i class="fas fa-car"></i> Добавить авто
+                </a>
+            }
             <a class="btn btn-success mx-2 mb-3 text-nowrap" asp-action="Search">
                 <i class="fas fa-camera"></i> Найти авто по фото
             </a>
@@ -62,7 +72,15 @@
                             <p class="card-text">Год: @Html.DisplayFor(modelItem => item.Year.Year)</p>
                             <p class="card-text">Цвет: @Html.DisplayFor(modelItem => item.Colour)</p>
                             <div style="margin-top: 50px;">
-                                <a class="btn btn-primary btn-sm text-nowrap" asp-action="CarView" asp-route-LicensePlate="@item.LicensePlate">Подробная информация</a>
+                                <a class="btn btn-primary btn-sm text-nowrap" asp-action="CarView" asp-route-LicensePlate="@item.LicensePlate">Детали</a>
+                                @if (Program.User == null)
+                                {
+                                    <a class="btn btn-primary btn-sm text-nowrap" asp-action="Enter">Отзывы</a>
+                                }
+                                else
+                                {
+                                    <a class="btn btn-primary btn-sm text-nowrap" asp-action="CarViewReview" asp-route-LicensePlate="@item.LicensePlate">Отзывы</a>
+                                }
                             </div>
                         </div>
                     </div>
@@ -71,3 +89,4 @@
         </div>
     </div>
 </body>
+<htmk>

@@ -140,7 +140,7 @@ namespace CarConnectDataBase.Implements
                 Colour = car.Colour,
                 FileName = car.FileName,
                 Path = car.Path,
-                UserId = car.UserId
+                UserId = car.UserId,
             };
         }
     }

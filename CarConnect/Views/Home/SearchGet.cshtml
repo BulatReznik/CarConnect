@@ -31,10 +31,10 @@
             <div class="card card-4">
                 <div class="card-body">
                     <h2 class="title text-center">Распознование номера по фото</h2>
-                    <form method="post">
+                    <form method="post" onsubmit="return validateForm()">
                         <div class="form-group">
                             <label for="LicensePlate">Для поиска оставьте только один номер:</label>
-                            <textarea class="form-control" id="LicensePlate" name="LicensePlate" rows="5" required="required" maxlength="9">@ViewData["EditValue"]</textarea>
+                            <input type="text" class="form-control" id="LicensePlate" name="LicensePlate" required="required" lang="en" maxlength="9" value="@ViewData["EditValue"]">
                             @if (ViewData.ModelState["LicensePlate"] != null && ViewData.ModelState["LicensePlate"].Errors.Count > 0)
                             {
                                 <div class="text-danger">
@@ -48,6 +48,19 @@
                             <a class="btn btn-primary text-nowrap" asp-action="Cars">Отмена</a>
                         </div>
                     </form>
+
+                    <script>
+                        function validateForm() {
+                            var licensePlate = document.getElementById("LicensePlate").value;
+                            var regex = /^{8,9}$/;
+                            if (!regex.test(licensePlate)) {
+                                alert("Номер должен состоять из 8-9 символов на английском языке");
+                                return false;
+                            }
+                            return true;
+                        }
+                    </script>
+
                 </div>
             </div>
         </div>

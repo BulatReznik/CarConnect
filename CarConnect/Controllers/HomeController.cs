@@ -5,13 +5,7 @@ using Emgu.CV.CvEnum;
 using Emgu.CV;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using System.IO;
-using System.Xml.Linq;
-using Emgu.CV;
-using Emgu.CV.CvEnum;
-using Emgu.CV.Structure;
 using CarConnectBusinessLogic.BusinessLogics;
-using System.Collections.Generic;
 
 namespace CarConnect.Controllers
 {
@@ -26,8 +20,41 @@ namespace CarConnect.Controllers
             _environment = environment;
             carCheck = new CarCheck();
         }
+
+        public IActionResult Logout()
+        {
+            Program.User = null;
+            return Redirect("~/Home/Enter");
+        }
+
+        [HttpGet]
+        public IActionResult CarViewReview(string LicensePlate)
+        {
+            ViewBag.CarWithReviews = APIClient.GetRequest<CarWithReviewsViewModel>($"api/review/getcarwithreviews/?LicensePlate={LicensePlate}");
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CarViewReview(string Text, int CarId, string LicensePlate)
+        {
+            var review = new ReviewBindingModel
+            {
+                UserId = Program.User.Id,
+                CarId = CarId,
+                Text = Text
+            };
+            APIClient.PostRequest("api/review/createorupdatereview", review);
+            return RedirectToAction("CarViewReview", new { LicensePlate = LicensePlate });
+        }
+
         public IActionResult Search()
         {
+            return View();
+        }
+        [HttpGet]
+        public IActionResult CarView(string LicensePlate)
+        {
+            ViewBag.Car = APIClient.GetRequest<CarViewModel>($"api/car/getcarbyplate?LicensePlate={LicensePlate}");
             return View();
         }
 
@@ -41,13 +68,14 @@ namespace CarConnect.Controllers
             return View(Program.User);
         }
 
+       
+
         [HttpPost]
         public void Privacy(string Email, string Password, string FirstName, string LastName, string MidleName, bool Gender, string PhoneNumber)
         {
             if (!string.IsNullOrEmpty(Email) && !string.IsNullOrEmpty(Password) && !string.IsNullOrEmpty(FirstName))
             {
-                APIClient.PostRequest("api/user/updatedata", new
-                UserBindingModel
+                APIClient.PostRequest("api/user/updatedata", new UserBindingModel
                 {
                     Id = Program.User.Id,
                     FirstName = FirstName,
@@ -113,7 +141,7 @@ namespace CarConnect.Controllers
         {
             return View();
         }
-        
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -177,7 +205,7 @@ namespace CarConnect.Controllers
 
         public IActionResult UserCars()
         {
-            if (Program.User == null) 
+            if (Program.User == null)
             {
                 return Redirect("~/Home/Enter");
             }
@@ -230,13 +258,6 @@ namespace CarConnect.Controllers
             return View();
         }
 
-        [HttpGet]
-        public IActionResult CarView(string LicensePlate)
-        {
-            ViewBag.Car = APIClient.GetRequest<CarViewModel>($"api/car/getcarbyplate?LicensePlate={LicensePlate}");
-            return View();
-        }
-
         [HttpPost]
         public IActionResult SearchGet(string LicensePlate, int k)
         {
@@ -254,14 +275,21 @@ namespace CarConnect.Controllers
             }
 
             ViewBag.Car = car;
-            return RedirectToAction("CarView", new { LicensePlate = LicensePlate });
+
+            if (Program.User != null)
+            {
+                return RedirectToAction("CarViewReview", new { LicensePlate = LicensePlate });
+            }
+            else
+            {
+                return RedirectToAction("CarView", new { LicensePlate = LicensePlate });
+            }
         }
 
         public IActionResult CarNotFound()
         {
             return View();
         }
-
 
         [HttpPost]
         public async Task<IActionResult> CarUpdate(int carId, string Brand, string Model, int Year,
@@ -272,7 +300,7 @@ namespace CarConnect.Controllers
             {
                 return Redirect("Cars");
             }
-            if (carId!=0)
+            if (carId != 0)
             {
                 DateTime date = new(Year, 1, 1);
                 string filename = car.FileName;
@@ -288,7 +316,7 @@ namespace CarConnect.Controllers
                     }
                     filename = uploadedFile.FileName;
                 }
-                
+
                 CarBindingModel newcar = new()
                 {
                     Id = carId,

@@ -1,0 +1,102 @@
+﻿@{
+    ViewData["Title"] = "Автомобиль";
+}
+
+<head>
+    <style>
+        .fs-5 {
+            font-size: 1.25rem;
+        }
+
+        .fs-6 {
+            font-size: 1rem;
+        }
+
+        body {
+            background: -webkit-gradient(linear, left bottom, right top, from(#fc2c77), to(#6c4079));
+            background: -webkit-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+            background: -moz-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+            background: -o-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+            background: linear-gradient(to top right, #fc2c77 0%, #6c4079 100%);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-wrapper p-t-70 p-b-100 font-robo">
+        <div class="wrapper wrapper--w960">
+            <div class="card card-4">
+                <div class="card-body">
+                    <h2 class="title text-center">Информация об автомобиле</h2>
+                    <div class="form-group required">
+
+                        <div class="form-group mt-3">
+                            <img src="@ViewBag.CarWithReviews.Path" alt="Фото автомобиля" class="img-thumbnail">
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <label for="Brand" class="fs-5">Марка автомобиля:</label>
+                            <p class="form-control-static fs-6">@ViewBag.CarWithReviews.Brand</p>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <label for="Model" class="fs-5">Модель автомобиля:</label>
+                            <p class="form-control-static fs-6">@ViewBag.CarWithReviews.Model</p>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <label for="Year" class="fs-5">Дата выпуска автомобиля:</label>
+                            <p class="form-control-static fs-6">@ViewBag.CarWithReviews.Year.Year</p>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <label for="VIN" class="fs-5">VIN номер автомобиля:</label>
+                            <p class="form-control-static fs-6">@ViewBag.CarWithReviews.VIN</p>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <label for="LicensePlate" class="fs-5">Номерной знак автомобиля:</label>
+                            <p class="form-control-static fs-6">@ViewBag.CarWithReviews.LicensePlate</p>
+                        </div>
+
+                        <div class="form-group mt-3">
+                            <label for="Colour" class="fs-5">Цвет автомобиля:</label>
+                            <p class="form-control-static fs-6">@ViewBag.CarWithReviews.Colour</p>
+                        </div>
+
+
+                        
+                        <!-- Добавление отзыва -->
+                        <h3 class="mt-4 mb-2">Добавить отзыв</h3>
+
+                        <form method="post">
+                            <div class="form-group">
+                                <input type="hidden" name="CarId" value="@ViewBag.CarWithReviews.CarId">
+                                <input type="hidden" name="LicensePlate" value="@ViewBag.CarWithReviews.LicensePlate">
+                                <textarea class="form-control" id="text" name="Text" rows="3" required></textarea>
+                            </div>
+                            <div class="mt-3 d-flex mb-4">
+                                <button type="submit" class="btn btn-success me-2">Добавить отзыв</button>
+                                <a class="btn btn-primary text-nowrap" asp-action="Cars">Назад</a>
+                            </div>
+                        </form>
+
+                        @foreach (var review in ViewBag.CarWithReviews.Reviews)
+                        {
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <p>@review.Text</p>
+                                    <div class="d-flex justify-content-between">
+                                        <div class="d-flex flex-row align-items-center">
+                                            <p class="small mb-0 ms-2">@review.UserName</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

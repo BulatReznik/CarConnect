@@ -50,10 +50,14 @@
                         <li class="nav-item">
                             <a class="nav-link mx-2" asp-area="" asp-controller="Home" asp-action="Cars">Автомобили</a>
                         </li>
-                        <li class="nav-item d-none d-lg-block">
+                        <li class="nav-item d-none d-md-block">
                             <a class="nav-link mx-2" href="#">
                                 <img src="/images/CarConnect.png" height="150" />
                             </a>
+                            @if (Program.User != null)
+                            {
+                                <p class="navbar-text mx-2 text-center">@Program.User.FirstName @Program.User.LastName</p>
+                            }
                         </li>
                         <li class="nav-item">
                             <a class="nav-link mx-2" asp-area="" asp-controller="Home" asp-action="Search">Поиск</a>
@@ -67,14 +71,22 @@
                                     <a class="nav-link" asp-area="" asp-controller="Home" asp-action="UserCars">Личные автомобили</a>
                                 </li>
                                 <li class="dropdown-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Search">Поиск</a>
+                                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="SearchGet">Поиск</a>
                                 </li>
-                                <li class="dropdown-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Enter">Вход</a>
-                                </li>
-                                <li class="dropdown-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Register">Регистрация</a>
-                                </li>
+                                @if (Program.User == null)
+                                {
+                                    <li class="dropdown-item">
+                                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Enter">Вход</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="dropdown-item">
+                                        <form id="logoutForm" method="post" asp-controller="Home" asp-action="Logout">
+                                            <button type="submit" class="btn btn-link nav-link">Выйти</button>
+                                        </form>
+                                    </li>
+                                }
                             </ul>
                         </li>
                     </ul>

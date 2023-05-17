@@ -31,6 +31,9 @@ namespace CarConnectServer
             services.AddTransient<ICarLogic, CarLogic>();
             services.AddTransient<ICarStorage, CarStorage>();
 
+            services.AddTransient<IReviewLogic, ReviewLogic>();
+            services.AddTransient<IReviewStorage, ReviewStorage>();
+
             services.AddControllers().AddNewtonsoftJson();
             services.AddSwaggerGen(c =>
             {

@@ -21,5 +21,8 @@ namespace CarConnectDataBase.Models
         public string PhoneNumber { get; set; }
         [Required]
         public bool Gender { get; set; }
+
+        [ForeignKey("UserId")]
+        public virtual List<Review> Reviews { get; set; }
     }
 }

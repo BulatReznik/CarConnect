@@ -32,11 +32,6 @@
   justify-content: space-between;
 }
 
-.col-2 {
-  width: -webkit-calc((100% - 30px) / 2);
-  width: -moz-calc((100% - 30px) / 2);
-  width: calc((100% - 30px) / 2);
-}
 
 @media (max-width: 767px) {
   .col-2 {
