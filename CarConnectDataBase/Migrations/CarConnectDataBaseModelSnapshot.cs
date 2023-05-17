@@ -52,6 +52,9 @@ namespace CarConnectDataBase.Migrations
                     b.Property<string>("Path")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.Property<string>("VIN")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

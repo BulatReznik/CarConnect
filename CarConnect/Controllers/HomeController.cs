@@ -1,11 +1,17 @@
 ﻿using CarConnect.Models;
 using CarConnectContracts.BindingModels;
 using CarConnectContracts.ViewModels;
+using Emgu.CV.CvEnum;
+using Emgu.CV;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.IO;
 using System.Xml.Linq;
-
+using Emgu.CV;
+using Emgu.CV.CvEnum;
+using Emgu.CV.Structure;
+using CarConnectBusinessLogic.BusinessLogics;
+using System.Collections.Generic;
 
 namespace CarConnect.Controllers
 {
@@ -13,14 +19,88 @@ namespace CarConnect.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IWebHostEnvironment _environment;
-
+        private readonly CarCheck carCheck;
         public HomeController(ILogger<HomeController> logger, IWebHostEnvironment environment)
         {
             _logger = logger;
             _environment = environment;
+            carCheck = new CarCheck();
         }
         public IActionResult Search()
         {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Privacy()
+        {
+            if (Program.User == null)
+            {
+                return Redirect("~/Home/Enter");
+            }
+            return View(Program.User);
+        }
+
+        [HttpPost]
+        public void Privacy(string Email, string Password, string FirstName, string LastName, string MidleName, bool Gender, string PhoneNumber)
+        {
+            if (!string.IsNullOrEmpty(Email) && !string.IsNullOrEmpty(Password) && !string.IsNullOrEmpty(FirstName))
+            {
+                APIClient.PostRequest("api/user/updatedata", new
+                UserBindingModel
+                {
+                    Id = Program.User.Id,
+                    FirstName = FirstName,
+                    LastName = LastName,
+                    MiddleName = MidleName,
+                    Email = Email,
+                    Password = Password,
+                    PhoneNumber = PhoneNumber,
+                    Gender = Gender
+                });
+                Program.User.Email = Email;
+                Program.User.Password = Password;
+                Program.User.FirstName = FirstName;
+                Program.User.LastName = LastName;
+                Program.User.MidleName = MidleName;
+                Program.User.Gender = Gender;
+                Program.User.PhoneNumber = PhoneNumber;
+                Response.Redirect("Index");
+                return;
+            }
+            throw new Exception("Введите логин, пароль, ФИО и номер телефона");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Search(IFormFile uploadedFile)
+        {
+            string str = "";
+            if (uploadedFile != null)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    await uploadedFile.CopyToAsync(memoryStream);
+                    byte[] fileBytes = memoryStream.ToArray();
+
+                    // Создание объекта Mat из массива байтов
+                    Mat inputImage = new();
+                    CvInvoke.Imdecode(fileBytes, ImreadModes.Color, inputImage);
+                    UMat um = inputImage.GetUMat(AccessType.ReadWrite);
+                    List<string> list = carCheck.ProcessImage(um);
+                    str = string.Join(",", list);
+                }
+            }
+            var routeValues = new RouteValueDictionary
+                {
+                    { "str", str }
+                };
+            return RedirectToAction("SearchGet", routeValues);
+        }
+
+        [HttpGet]
+        public IActionResult SearchGet(string str)
+        {
+            ViewData["EditValue"] = str;
             return View();
         }
 
@@ -29,14 +109,11 @@ namespace CarConnect.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
         public IActionResult CarCreate()
         {
             return View();
         }
+        
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -100,14 +177,24 @@ namespace CarConnect.Controllers
 
         public IActionResult UserCars()
         {
-            return View(APIClient.GetRequest<List<CarViewModel>>($"api/car/getcarlist"));
+            if (Program.User == null) 
+            {
+                return Redirect("~/Home/Enter");
+            }
+            return View(APIClient.GetRequest<List<CarViewModel>>($"api/car/getusercarlist?userId={Program.User.Id}"));
         }
 
         [HttpPost]
         public async Task<IActionResult> CarCreate(string Brand, string Model, int Year,
             string VIN, string LicensePlate, string Colour, IFormFile uploadedFile)
         {
-            if (Year==null || uploadedFile==null)
+            if (LicensePlate.Length < 8 || LicensePlate.Length > 9)
+            {
+                ModelState.AddModelError("LicensePlate", "Номер должен содержать от 8 до 9 символов.");
+                ViewData["EditValue"] = LicensePlate;
+                return View();
+            }
+            if (Year != 0 || uploadedFile != null)
             {
                 DateTime date = new(Year, 1, 1);
 
@@ -118,7 +205,7 @@ namespace CarConnect.Controllers
                 {
                     await uploadedFile.CopyToAsync(fileStream);
                 }
-                CarBindingModel car = new CarBindingModel
+                CarBindingModel car = new()
                 {
                     Brand = Brand,
                     Model = Model,
@@ -127,7 +214,8 @@ namespace CarConnect.Controllers
                     LicensePlate = LicensePlate,
                     Colour = Colour,
                     FileName = uploadedFile.FileName,
-                    Path = path
+                    Path = path,
+                    UserId = (int)Program.User.Id
                 };
 
                 APIClient.PostRequest("api/car/createorupdatecar", car);
@@ -142,6 +230,39 @@ namespace CarConnect.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult CarView(string LicensePlate)
+        {
+            ViewBag.Car = APIClient.GetRequest<CarViewModel>($"api/car/getcarbyplate?LicensePlate={LicensePlate}");
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult SearchGet(string LicensePlate, int k)
+        {
+            if (LicensePlate.Length < 8 || LicensePlate.Length > 9)
+            {
+                ModelState.AddModelError("LicensePlate", "Номер должен содержать от 8 до 9 символов.");
+                ViewData["EditValue"] = LicensePlate;
+                return RedirectToAction("CarNotFound");
+            }
+
+            var car = APIClient.GetRequest<CarViewModel>($"api/car/getcarbyplate?LicensePlate={LicensePlate}");
+            if (car == null)
+            {
+                return RedirectToAction("CarNotFound");
+            }
+
+            ViewBag.Car = car;
+            return RedirectToAction("CarView", new { LicensePlate = LicensePlate });
+        }
+
+        public IActionResult CarNotFound()
+        {
+            return View();
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> CarUpdate(int carId, string Brand, string Model, int Year,
             string VIN, string LicensePlate, string Colour, IFormFile uploadedFile)
@@ -151,29 +272,37 @@ namespace CarConnect.Controllers
             {
                 return Redirect("Cars");
             }
-            if (uploadedFile != null) { 
+            if (carId!=0)
+            {
                 DateTime date = new(Year, 1, 1);
-            // путь к папке Files
-            string path = "/Files/" + uploadedFile.FileName;
-            // сохраняем файл в папку Files в каталоге wwwroot
-            using (var fileStream = new FileStream(_environment.WebRootPath + path, FileMode.Create))
-            {
-                await uploadedFile.CopyToAsync(fileStream);
-            }
-            CarBindingModel newcar = new CarBindingModel
-            {
-                Id= carId,
-                Brand = Brand,
-                Model = Model,
-                Year = date,
-                VIN = VIN,
-                LicensePlate = LicensePlate,
-                Colour = Colour,
-                FileName = uploadedFile.FileName,
-                Path = path
-            };
+                string filename = car.FileName;
+                string path = car.Path;
+                if (uploadedFile != null)
+                {
+                    // путь к папке Files
+                    path = "/Files/" + uploadedFile.FileName;
+                    // сохраняем файл в папку Files в каталоге wwwroot
+                    using (var fileStream = new FileStream(_environment.WebRootPath + path, FileMode.Create))
+                    {
+                        await uploadedFile.CopyToAsync(fileStream);
+                    }
+                    filename = uploadedFile.FileName;
+                }
+                
+                CarBindingModel newcar = new()
+                {
+                    Id = carId,
+                    Brand = Brand,
+                    Model = Model,
+                    Year = date,
+                    VIN = VIN,
+                    LicensePlate = LicensePlate,
+                    Colour = Colour,
+                    FileName = filename,
+                    Path = path
+                };
 
-            APIClient.PostRequest("api/car/createorupdatecar", newcar);
+                APIClient.PostRequest("api/car/createorupdatecar", newcar);
             }
             return Redirect("Cars");
         }
@@ -185,7 +314,5 @@ namespace CarConnect.Controllers
             APIClient.PostRequest("api/car/deletecar", car);
             Response.Redirect("Cars");
         }
-
-
     }
 }

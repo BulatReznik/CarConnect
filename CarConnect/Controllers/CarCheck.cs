@@ -1,5 +1,4 @@
-﻿using CarConnectContracts.BusinessLogicsContracts;
-using Emgu.CV;
+﻿using Emgu.CV;
 using Emgu.CV.Structure;
 using System;
 using System.Collections.Generic;
@@ -14,7 +13,7 @@ namespace CarConnectBusinessLogic.BusinessLogics
     {
         private CarNumberRecognizer numberRecognizer;
 
-        public List<string> AddRecognations(IInputOutputArray image)
+        public List<string> ProcessImage(IInputOutputArray image)
         {
             numberRecognizer = new CarNumberRecognizer(@"C:\Users\73bul\source\repos\CarCheck\CarCheck\TestData", "eng");
             List<IInputOutputArray> licensePlateImageList = new();

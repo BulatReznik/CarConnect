@@ -1,4 +1,5 @@
 ﻿using CarConnectContracts.BusinessLogicsContracts;
+using Emgu.CV;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarConnectServer.Controllers
@@ -12,7 +13,10 @@ namespace CarConnectServer.Controllers
             _recognationLogic = recognationLogic;
         }
 
+        [HttpPost]
+        public void AddRecognition(UMat mat) => _recognationLogic.AddRecognations(mat);
+
         [HttpGet]
-        public List<string> GetRecognation() => _recognationLogic.GetRecognations(); 
+        public List<string> GetRecognation() => _recognationLogic.ReadRecognitions();
     }
 }

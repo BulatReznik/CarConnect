@@ -4,33 +4,99 @@
 @{
     ViewData["Title"] = "Privacy Policy";
 }
-<div class="text-center">
-    <h2 class="display-4">Личные данные</h2>
-</div>
-<form method="post">
-    <div class="row">
-        <div class="col-4">Логин:</div>
-        <div class="col-8">
-            <input type="text" name="Email"
-                   value="@Model.Email" />
+
+<style>
+    body {
+        background: -webkit-gradient(linear, left bottom, right top, from(#fc2c77), to(#6c4079));
+        background: -webkit-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+        background: -moz-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+        background: -o-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+        background: linear-gradient(to top right, #fc2c77 0%, #6c4079 100%);
+    }
+</style>
+<body>
+    <div class="page-wrapper p-t-100 p-b-100 font-robo">
+        <div class="wrapper wrapper--w680">
+            <div class="card card-4">
+                <div class="card-body">
+                    <h2 class="title text-center">Личные данные</h2>
+                    <form method="post">
+                        <div class="form-group required">
+                            <div class="row row-space">
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Имя:</label>
+                                        <input class="input--style-4" type="text" name="FirstName" required="required" value="@Model.Email">
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Фамилия:</label>
+                                        <input class="input--style-4" type="text" name="LastName" required="required" value="@Model.LastName">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row row-space">
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Отчество:</label>
+                                        <input class="input--style-4" type="text" name="MidleName" required="required" value="@Model.MidleName">
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Пол:</label>
+                                        <div class="p-t-10">
+                                            <label class="radio-container m-r-45">
+                                                Мужской
+                                                <input type="radio" checked="checked" name="Gender">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                            <label class="radio-container">
+                                                Женский
+                                                <input type="radio" name="Gender">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row row-space">
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Email:</label>
+                                        <input class="input--style-4" type="email" name="Email" required="required" value="@Model.Email">
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Телефонный номер:</label>
+                                        <input class="input--style-4" type="text" name="PhoneNumber" required="required" value="@Model.PhoneNumber">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row row-space">
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Пароль:</label>
+                                        <input class="input--style-4" type="password" name="Password" required="required" value="@Model.Password">
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Повторите пароль:</label>
+                                        <input class="input--style-4" type="password" name="Password" required="required" value="@Model.Password">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-t-15">
+                                <input type="submit" value="Сохранить" class="btn btn-primary text-nowrap" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
+
     </div>
-    <div class="row">
-        <div class="col-4">Пароль:</div>
-        <div class="col-8">
-            <input type="password" name="Password"
-                   value="@Model.Password" />
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-4">ФИО:</div>
-        <div class="col-8">
-            <input type="text" name="Password"
-                   value="@Model.Password" />
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-8"></div>
-        <div class="col-4"><input type="submit" value="Сохранить" class="btn btnprimary" /></div>
-    </div>
-</form>
+</body>

@@ -32,9 +32,10 @@ namespace CarConnectDataBase.Implements
             }
             using var context = new CarConnectDataBase();
             return context.Cars.
-                ToList().
-                Select(CreateModel).
-                ToList();
+                ToList()
+                .Where(rec => (rec.UserId == model.UserId))
+                .Select(CreateModel)
+                .ToList();
         }
         public CarViewModel GetCar(CarBindingModel model)
         {
@@ -44,7 +45,7 @@ namespace CarConnectDataBase.Implements
             }
             using var context = new CarConnectDataBase();
             var car = context.Cars
-                 .FirstOrDefault(rec => rec.Id == model.Id || rec.Brand == model.Brand);
+                 .FirstOrDefault(rec => rec.Id == model.Id || rec.LicensePlate == model.LicensePlate);
             return car != null ? CreateModel(car) : null;
         }
         public void Insert(CarBindingModel model)
@@ -62,7 +63,8 @@ namespace CarConnectDataBase.Implements
                     LicensePlate= model.LicensePlate,
                     Colour = model.Colour,
                     FileName = model.FileName,
-                    Path= model.Path,
+                    Path = model.Path,
+                    UserId = model.UserId
 
                 };
                 context.Cars.Add(car);
@@ -136,8 +138,9 @@ namespace CarConnectDataBase.Implements
                 VIN = car.VIN,
                 LicensePlate = car.LicensePlate,
                 Colour = car.Colour,
-                Name = car.FileName,
+                FileName = car.FileName,
                 Path = car.Path,
+                UserId = car.UserId
             };
         }
     }

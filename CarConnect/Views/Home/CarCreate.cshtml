@@ -1,62 +1,76 @@
-﻿﻿@{
+﻿@{
     ViewData["Title"] = "Добавление автомобиля";
 }
+<style>
 
-
-
+    body {
+        background: -webkit-gradient(linear, left bottom, right top, from(#fc2c77), to(#6c4079));
+        background: -webkit-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+        background: -moz-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+        background: -o-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+        background: linear-gradient(to top right, #fc2c77 0%, #6c4079 100%);
+    }
+</style>
 <body>
-    <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-robo">
+    <div class="page-wrapper p-t-50 p-b-100 lr-10 font-robo">
         <div class="wrapper wrapper--w680">
             <div class="card card-4">
                 <div class="card-body">
                     <h2 class="title text-center">Добавить машину</h2>
                     <form method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
 
-                            <div class="form-group mt-3">
-                                <label for="Brand">Марка автомобиля:</label>
-                            <input type="text" class="form-control" name="Brand" id="Brand" required="required">
-                            </div>
+                        <div class="form-group mt-3">
+                            <label for="Brand">Марка автомобиля:</label>
+                            <input type="text" class="form-control" name="Brand" id="Brand" required="required" placeholder="BMW">
+                        </div>
 
-                            <div class="form-group mt-3">
-                                <label for="Model">Модель автомобиля:</label>
-                            <input type="text" class="form-control" name="Model" id="Model" required="required">
-                            </div>
+                        <div class="form-group mt-3">
+                            <label for="Model">Модель автомобиля:</label>
+                            <input type="text" class="form-control" name="Model" id="Model" required="required" placeholder="X5">
+                        </div>
 
-                            <div class="form-group mt-3">
-                                <label for="Year">Дата выпуска автомобиля:</label>
-                            <input type="number" class="form-control" name="Year" id="Year" min="1900" max="@DateTime.Now.Year" value="yyyy" required="required">
-                             </div>
+                        <div class="form-group mt-3">
+                            <label for="Year">Дата выпуска автомобиля:</label>
+                            <input type="number" class="form-control" name="Year" id="Year" min="1900" max="@DateTime.Now.Year" value="yyyy" required="required" placeholder="2023">
+                        </div>
 
-                            <div class="form-group mt-3">
-                                <label for="VIN">VIN номер автомобиля:</label>
-                            <input type="text" class="form-control" name="VIN" id="VIN" required="required">
-                            </div>
+                        <div class="form-group mt-3">
+                            <label for="VIN">VIN номер автомобиля:</label>
+                            <input type="text" class="form-control" name="VIN" id="VIN" required="required" placeholder="X7LLSRB1HAH5487121">
+                        </div>
 
-                            <div class="form-group mt-3">
-                                <label for="LicensePlate">Номерной знак автомобиля:</label>
-                            <input type="text" class="form-control" name="LicensePlate" id="LicensePlate" required="required">
-                            </div>
 
-                            <div class="form-group mt-3">
-                                <label for="Colour">Цвет автомобиля:</label>
-                            <input type="text" class="form-control" name="Colour" id="Colour" required="required">
-                            </div>
+                        <div class="form-group mt-3">
+                            <label for="LicensePlate">Номерной знак автомобиля:</label>
+                            <input type="text" class="form-control" name="LicensePlate" id="LicensePlate" required="required" placeholder="A007AA77">
+                            @if (ViewData.ModelState["LicensePlate"] != null && ViewData.ModelState["LicensePlate"].Errors.Count > 0)
+                            {
+                                <div class="text-danger">
+                                    @ViewData.ModelState["LicensePlate"].Errors[0].ErrorMessage
+                                </div>
+                            }
+                        </div>
 
-                            <div class="form-group mt-3">
+                        <div class="form-group mt-3">
+                            <label for="Colour">Цвет автомобиля:</label>
+                            <input type="text" class="form-control" name="Colour" id="Colour" required="required" placeholder="Черный">
+                        </div>
+
+                        <div class="form-group mt-3">
                             <label for="uploadedFile">Фото автомобиля:</label>
                             <input type="file" class="form-control" name="uploadedFile" id="uploadedFile" required="required">
-                            </div>
-
-                            <div class="form-group mt-3">
-                                <img id="preview" style="max-width: 400px; max-height: 400px; margin-top: 10px;" />
-                            </div>
-
-
-                           <div class="mt-3 d-flex">
-                            <input type="submit" value="Добавить" class="btn btn-success me-2">
-                            <a class="btn btn-primary" asp-action="Index">Отмена</a>
                         </div>
-                           
+
+                        <div class="form-group mt-3">
+                            <img id="preview" style="max-width: 400px; max-height: 400px; margin-top: 10px;" />
+                        </div>
+
+
+                        <div class="mt-3 d-flex">
+                            <input type="submit" value="Добавить" class="btn btn-success me-2">
+                            <a class="btn btn-primary text-nowrap" asp-action="Index">Отмена</a>
+                        </div>
+
                     </form>
                 </div>
             </div>
@@ -121,11 +135,15 @@
                 return false;
             }
 
-            // Проверка поля "Номерной знак автомобиля"
             var licensePlateInput = document.getElementById('LicensePlate');
             var licensePlate = licensePlateInput.value.trim();
             if (licensePlate === '') {
                 alert("Пожалуйста, введите номерной знак автомобиля.");
+                licensePlateInput.focus();
+                return false;
+            }
+            if (licensePlate.length < 8 || licensePlate.length > 9) {
+                alert("Номер должен содержать от 8 до 9 символов и иметь формат A007AA77 или A007AA777");
                 licensePlateInput.focus();
                 return false;
             }

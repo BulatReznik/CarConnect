@@ -9,86 +9,58 @@
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+    <style>
+        body {
+            background: -webkit-gradient(linear, left bottom, right top, from(#fc2c77), to(#6c4079));
+            background: -webkit-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+            background: -moz-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+            background: -o-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+            background: linear-gradient(to top right, #fc2c77 0%, #6c4079 100%);
+        }
+
+        .text-center {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-robo">
-        <div class="wrapper wrapper--w970">
-            <div class="card card-4">
-                <div class="card-body">
-                    <div class="text-center">
-                        @{
-                            <p>
-                                <a class="btn btn-success" asp-action="CarCreate">
-                                    <i class="fas fa-car"></i> Добавить авто
-                                </a>
-                            </p>
+    <div class="text-center">
+        <div class="d-flex justify-content-center mb-3">
+            
+        </div>
 
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            Номер
-                                        </th>
-                                        <th>
-                                            Бренд
-                                        </th>
-                                        <th>
-                                            Модель
-                                        </th>
-                                        <th>
-                                            Год
-                                        </th>
-                                        <th>
-                                            Цвет
-                                        </th>
-                                        <th>
-                                            VIN-номер
-                                        </th>
-                                        <th>
-                                            Фото
-                                        </th>
-                                        <th>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model)
-                                    {
-                                        <tr>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.LicensePlate)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Brand)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Model)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Year.Year)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.Colour)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.VIN)
-                                            </td>
-                                            <td>
-                                                <img src="@item.Path" width="100" hight="100">
-                                            </td>
-                                            <td>
-                                                <a class="btn btn-primary btn-sm mr-0" asp-action="CarUpdate" asp-route-carId="@item.Id" asp-route-carBrand="@item.Brand" asp-route-carModel="@item.Model">Изменить</a>
-                                                <a class="btn btn-danger btn-sm ml-0" asp-action="CarDelete" asp-route-carId="@item.Id">Удалить</a>
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        }
+        <div class="btn-group">
+            <a class="btn btn-success mb-3" asp-action="CarCreate">
+                <i class="fas fa-car"></i> Добавить авто
+            </a>
+            <a class="btn btn-success mx-2 mb-3" asp-action="Privacy">
+                <i class="fas fa-user-circle"></i> Профиль
+            </a>
+        </div>
+
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card rounded-2 mb-3">
+                        <img src="@item.Path" class="card-img-top" height="300">
+
+                        <div class="card-body">
+                            <h5 class="card-title">Номер: @Html.DisplayFor(modelItem => item.LicensePlate)</h5>
+                            <p class="card-text">Бренд: @Html.DisplayFor(modelItem => item.Brand)</p>
+                            <p class="card-text">Модель: @Html.DisplayFor(modelItem => item.Model)</p>
+                            <p class="card-text">Год: @Html.DisplayFor(modelItem => item.Year.Year)</p>
+                            <p class="card-text">Цвет: @Html.DisplayFor(modelItem => item.Colour)</p>
+                            <p class="card-text">VIN-номер: @Html.DisplayFor(modelItem => item.VIN)</p>
+                            <div style="margin-top: 50px;">
+                                <a class="btn btn-primary btn-sm text-nowrap" href="@Url.Action("CarUpdate", new { carId = item.Id, carBrand = item.Brand, carModel = item.Model })">Изменить</a>
+                                <a class="btn btn-danger btn-sm text-nowrap" href="@Url.Action("CarDelete", new { carId = item.Id })">Удалить</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
         </div>
     </div>
 </body>

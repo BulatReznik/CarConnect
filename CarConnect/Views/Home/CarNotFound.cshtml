@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "Нам очень жаль";
+}
+
+<head>
+    <title>Мы не нашли автомобиль</title>
+    <style>
+        body {
+            background: -webkit-gradient(linear, left bottom, right top, from(#fc2c77), to(#6c4079));
+            background: -webkit-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+            background: -moz-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+            background: -o-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+            background: linear-gradient(to top right, #fc2c77 0%, #6c4079 100%);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="text-center">
+        <div class="page-wrapper p-t-50 p-b-100 lr-10 font-robo">
+            <div class="wrapper wrapper--w680">
+                <div class="card card-4">
+                    <div class="card-body">
+                        <h1 style="margin-bottom: 30px;">Мы не нашли автомобиль с таким номером в базе</h1>
+                        <p>К сожалению, по указанному номеру автомобиля нет соответствующей записи в нашей базе данных.</p>
+                        <p style="margin-bottom: 30px;">Пожалуйста, проверьте правильность введенного номера и попробуйте снова или добавьте свое авто с этим номером.</p>
+                        <a class="btn btn-primary text-nowrap" asp-action="SearchGet">Вернуться к поиску</a>
+                        <a class="btn btn-primary text-nowrap" asp-action="CarCreate">Добавить новое авто</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

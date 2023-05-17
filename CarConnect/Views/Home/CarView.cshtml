@@ -1,0 +1,78 @@
+﻿@using CarConnectContracts.ViewModels
+
+@model List<CarViewModel>
+
+@{
+    ViewData["Title"] = "Автомобиль";
+}
+
+<head>
+    <style>
+        .fs-5 {
+            font-size: 1.25rem; /* размер шрифта 1.25rem (увеличение на 2 размера относительно базового размера) */
+        }
+
+        .fs-6 {
+            font-size: 1rem; /* базовый размер шрифта */
+        }
+
+        body {
+            background: -webkit-gradient(linear, left bottom, right top, from(#fc2c77), to(#6c4079));
+            background: -webkit-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+            background: -moz-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+            background: -o-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+            background: linear-gradient(to top right, #fc2c77 0%, #6c4079 100%);
+        }
+    </style>
+</head>
+
+<div class="page-wrapper p-t-130 p-b-100 font-robo">
+    <div class="wrapper wrapper--w680">
+        <div class="card card-4">
+            <div class="card-body">
+                <h2 class="title text-center">Информация об автомобиле</h2>
+                <div class="form-group required">
+                    <div class="form-group mt-3">
+                        <label for="Brand" class="fs-5">Марка автомобиля:</label>
+                        <p class="form-control-static fs-6">@ViewBag.Car.Brand</p>
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label for="Model" class="fs-5">Модель автомобиля:</label>
+                        <p class="form-control-static fs-6">@ViewBag.Car.Model</p>
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label for="Year" class="fs-5">Дата выпуска автомобиля:</label>
+                        <p class="form-control-static fs-6">@ViewBag.Car.Year.Year</p>
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label for="VIN" class="fs-5">VIN номер автомобиля:</label>
+                        <p class="form-control-static fs-6">@ViewBag.Car.VIN</p>
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label for="LicensePlate" class="fs-5">Номерной знак автомобиля:</label>
+                        <p class="form-control-static fs-6">@ViewBag.Car.LicensePlate</p>
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label for="Colour" class="fs-5">Цвет автомобиля:</label>
+                        <p class="form-control-static fs-6">@ViewBag.Car.Colour</p>
+                    </div>
+
+                    <div class="form-group mt-3">
+                        <label for="uploadedFile" class="fs-5">Фото автомобиля:</label>
+                        <img src="@ViewBag.Car.Path" alt="Фото автомобиля" class="img-thumbnail">
+                    </div>
+
+                    <div class="mt-3">
+                        <a class="btn btn-primary text-nowrap" asp-action="Index">Назад</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -6,9 +6,6 @@
     font-family: "Roboto", "Arial", "Helvetica Neue", sans-serif;
 }
 
-.font-poppins {
-    font-family: "Poppins", "Arial", "Helvetica Neue", sans-serif;
-}
 
 /* ==========================================================================
    #GRID
@@ -178,11 +175,13 @@ h6 {
 }
 
 .bg-gra-02 {
+    height:19
     background: -webkit-gradient(linear, left bottom, right top, from(#fc2c77), to(#6c4079));
     background: -webkit-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
     background: -moz-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
     background: -o-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
     background: linear-gradient(to top right, #fc2c77 0%, #6c4079 100%);
+    background-size: cover;
 }
 
 /* ==========================================================================
@@ -208,8 +207,8 @@ h6 {
     padding-top: 15px;
 }
 
-.p-t-10 {
-    padding-top: 10px;
+.p-t-50 {
+    padding-top: 50px;
 }
 
 .p-t-30 {
@@ -223,7 +222,10 @@ h6 {
 .m-r-45 {
     margin-right: 45px;
 }
-
+.lr-10 {
+    padding-left: 10px;
+    padding-right: 10px;
+}
 /* ==========================================================================
    #WRAPPER
    ========================================================================== */

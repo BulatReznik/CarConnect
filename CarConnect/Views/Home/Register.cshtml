@@ -2,24 +2,34 @@
     ViewData["Title"] = "Регистрация";
 }
 
+<style>
+    body {
+        background: -webkit-gradient(linear, left bottom, right top, from(#fc2c77), to(#6c4079));
+        background: -webkit-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+        background: -moz-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+        background: -o-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+        background: linear-gradient(to top right, #fc2c77 0%, #6c4079 100%);
+    }
+</style>
 <body>
-    <div class="page-wrapper bg-gra-02 p-t-100 p-b-100 font-robo">
+    <div class="page-wrapper p-t-100 p-b-100 font-robo">
         <div class="wrapper wrapper--w680">
             <div class="card card-4">
                 <div class="card-body">
                     <h2 class="title text-center">Регистрация</h2>
                     <form method="post">
+                        <div class="form-group required">
                         <div class="row row-space">
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Имя:</label>
-                                    <input class="input--style-4" type="text" name="FirstName">
+                                    <input class="input--style-4" type="text" name="FirstName" required="required">
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Фамилия:</label>
-                                    <input class="input--style-4" type="text" name="LastName">
+                                    <input class="input--style-4" type="text" name="LastName" required="required">
                                 </div>
                             </div>
                         </div>
@@ -27,7 +37,7 @@
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Отчество:</label>
-                                    <input class="input--style-4" type="text" name="MidleName">
+                                    <input class="input--style-4" type="text" name="MidleName" required="required">
                                 </div>
                             </div>
                             <div class="col-2">
@@ -52,13 +62,13 @@
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Email:</label>
-                                    <input class="input--style-4" type="email" name="Email">
+                                    <input class="input--style-4" type="email" name="Email"required="required">
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Телефонный номер:</label>
-                                    <input class="input--style-4" type="text" name="PhoneNumber">
+                                    <input class="input--style-4" type="text" name="PhoneNumber" required="required">
                                 </div>
                             </div>
                         </div>
@@ -66,18 +76,19 @@
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Пароль:</label>
-                                    <input class="input--style-4" type="password" name="Password">
+                                    <input class="input--style-4" type="password" name="Password"required="required">
                                 </div>
                             </div>
                             <div class="col-2">
                                 <div class="input-group">
                                     <label class="label">Повторите пароль:</label>
-                                    <input class="input--style-4" type="password" name="Password">
+                                    <input class="input--style-4" type="password" name="Password" required="required">
                                 </div>
                             </div>
                         </div>
                         <div class="p-t-15">
-                            <button class="btn btn--radius-2 btn--blue" type="submit">Зарегистрироваться</button>
+                                <button class="btn btn--radius-2 btn--blue text-nowrap" type="submit">Зарегистрироваться</button>
+                        </div>
                         </div>
                     </form>
                 </div>

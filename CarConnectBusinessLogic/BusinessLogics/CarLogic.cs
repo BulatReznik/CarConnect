@@ -23,7 +23,7 @@ namespace CarConnectBusinessLogic.BusinessLogics
             {
                 return _carStorage.GetFullList();
             }
-            if (model.Id.HasValue)
+            if (model.Id.HasValue || !string.IsNullOrEmpty(model.LicensePlate))
             {
                 return new List<CarViewModel> { _carStorage.GetCar(model) };
             }
@@ -34,11 +34,11 @@ namespace CarConnectBusinessLogic.BusinessLogics
         {
             var car = _carStorage.GetCar(new CarBindingModel
             {
-                VIN = model.VIN
+                LicensePlate = model.LicensePlate
             });
             if(car!=null && car.Id != model.Id)
             {
-                throw new Exception("Автомобиль с таким vin уже есть");
+                throw new Exception("Автомобиль с таким номером уже есть");
             }
             if (model.Id.HasValue)
             {

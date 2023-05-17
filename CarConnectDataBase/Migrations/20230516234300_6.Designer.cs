@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarConnectDataBase.Migrations
 {
     [DbContext(typeof(CarConnectDataBase))]
-    [Migration("20230515231415_5")]
-    partial class _5
+    [Migration("20230516234300_6")]
+    partial class _6
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,6 +54,9 @@ namespace CarConnectDataBase.Migrations
 
                     b.Property<string>("Path")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.Property<string>("VIN")
                         .IsRequired()
