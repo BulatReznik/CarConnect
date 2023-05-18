@@ -2,15 +2,47 @@
     ViewData["Title"] = "Регистрация";
 }
 
-<style>
-    body {
-        background: -webkit-gradient(linear, left bottom, right top, from(#fc2c77), to(#6c4079));
-        background: -webkit-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
-        background: -moz-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
-        background: -o-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
-        background: linear-gradient(to top right, #fc2c77 0%, #6c4079 100%);
-    }
-</style>
+
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewData["Title"]</title>
+
+    <style>
+        body {
+            background: -webkit-gradient(linear, left bottom, right top, from(#fc2c77), to(#6c4079));
+            background: -webkit-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+            background: -moz-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+            background: -o-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+            background: linear-gradient(to top right, #fc2c77 0%, #6c4079 100%);
+        }
+
+        .btn--blue {
+            background-color: #4e8bff;
+            color: #fff;
+        }
+
+        .btn--blue:hover {
+                background-color: #428bff;
+        }
+
+        .row::after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        .col-2 {
+            float: left;
+            width: 50%;
+            padding: 0 15px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
 <body>
     <div class="page-wrapper p-t-70 p-b-100 font-robo">
         <div class="wrapper wrapper--w680">
@@ -19,82 +51,80 @@
                     <h2 class="title text-center">Регистрация</h2>
                     <form method="post">
                         <div class="form-group required">
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Имя:</label>
-                                    <input class="input--style-4" type="text" name="FirstName" required="required">
+                            <div class="row row-space">
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Имя:</label>
+                                        <input class="input--style-4" type="text" name="FirstName" required="required">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Фамилия:</label>
-                                    <input class="input--style-4" type="text" name="LastName" required="required">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Отчество:</label>
-                                    <input class="input--style-4" type="text" name="MidleName" required="required">
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Пол:</label>
-                                    <div class="p-t-10">
-                                        <label class="radio-container m-r-45">
-                                            Мужской
-                                            <input type="radio" checked="checked" name="Gender">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                        <label class="radio-container">
-                                            Женский
-                                            <input type="radio" name="Gender">
-                                            <span class="checkmark"></span>
-                                        </label>
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Фамилия:</label>
+                                        <input class="input--style-4" type="text" name="LastName" required="required">
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Email:</label>
-                                    <input class="input--style-4" type="email" name="Email"required="required">
+                            <div class="row row-space">
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Отчество:</label>
+                                        <input class="input--style-4" type="text" name="MidleName" required="required">
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Пол:</label>
+                                        <div class="p-t-10">
+                                            <label class="radio-container m-r-45">
+                                                Мужской
+                                                <input type="radio" checked="checked" name="Gender">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                            <label class="radio-container">
+                                                Женский
+                                                <input type="radio" name="Gender">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Телефонный номер:</label>
-                                    <input class="input--style-4" type="text" name="PhoneNumber" required="required">
+                            <div class="row row-space">
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Email:</label>
+                                        <input class="input--style-4" type="email" name="Email" required="required">
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Телефонный номер:</label>
+                                        <input class="input--style-4" type="text" name="PhoneNumber" required="required">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Пароль:</label>
-                                    <input class="input--style-4" type="password" name="Password"required="required">
+                            <div class="row row-space">
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Пароль:</label>
+                                        <input class="input--style-4" type="password" name="Password" required="required">
+                                    </div>
+                                </div>
+                                <div class="col-2">
+                                    <div class="input-group">
+                                        <label class="label">Повторите пароль:</label>
+                                        <input class="input--style-4" type="password" name="ConfirmPassword" required="required">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Повторите пароль:</label>
-                                    <input class="input--style-4" type="password" name="Password" required="required">
-                                </div>
+                            <div class="p-t-15">
+                                <input type="submit" value="Сохранить" class="btn btn-primary text-nowrap" />
                             </div>
-                        </div>
-                        <div class="p-t-15">
-                                <button class="btn btn--radius-2 btn--blue text-nowrap" type="submit">Зарегистрироваться</button>
-                        </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
-
 </body>

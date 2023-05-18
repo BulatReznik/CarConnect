@@ -17,6 +17,10 @@ namespace CarConnectContracts.BindingModels
         public string Colour { get; set; }
         public string? FileName { get; set; }
         public string Path { get; set; }
+
+        public string UserName { get; set; }
+        public string UserEmail { get; set; }
+        public string UserPhone { get; set; }
         public int UserId { get; set; }
     }
 }

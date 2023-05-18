@@ -19,6 +19,7 @@ namespace CarConnectDataBase.Implements
         {
             using var context = new CarConnectDataBase();
             return context.Cars
+                .Include(r => r.User) // Загрузка связанного объекта User
                 .ToList()
                 .Select(CreateModel)
                 .ToList();
@@ -31,8 +32,9 @@ namespace CarConnectDataBase.Implements
                 return null;
             }
             using var context = new CarConnectDataBase();
-            return context.Cars.
-                ToList()
+            return context.Cars
+                .Include(r => r.User) // Загрузка связанного объекта User
+                .ToList()
                 .Where(rec => (rec.UserId == model.UserId))
                 .Select(CreateModel)
                 .ToList();
@@ -58,13 +60,16 @@ namespace CarConnectDataBase.Implements
                 {
                     Brand = model.Brand,
                     Model = model.Model,
-                    Year= model.Year,
-                    VIN= model.VIN,
-                    LicensePlate= model.LicensePlate,
+                    Year = model.Year,
+                    VIN = model.VIN,
+                    LicensePlate = model.LicensePlate,
                     Colour = model.Colour,
                     FileName = model.FileName,
                     Path = model.Path,
-                    UserId = model.UserId
+                    UserId = model.UserId,
+                    UserName = model.UserName,
+                    UserEmail = model.UserEmail,
+                    UserPhone = model.UserPhone
 
                 };
                 context.Cars.Add(car);
@@ -141,6 +146,9 @@ namespace CarConnectDataBase.Implements
                 FileName = car.FileName,
                 Path = car.Path,
                 UserId = car.UserId,
+                UserName = car.UserName,
+                UserEmail = car.UserEmail,
+                UserPhone = car.UserPhone
             };
         }
     }

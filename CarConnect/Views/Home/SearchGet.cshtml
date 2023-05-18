@@ -12,9 +12,6 @@
             margin-bottom: 20px;
         }
 
-        .btn {
-            margin-right: 10px;
-        }
 
         body {
             background: -webkit-gradient(linear, left bottom, right top, from(#fc2c77), to(#6c4079));
@@ -23,6 +20,11 @@
             background: -o-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
             background: linear-gradient(to top right, #fc2c77 0%, #6c4079 100%);
         }
+
+        .buttons-frame {
+            display: flex;
+            flex-direction: row;
+        }
     </style>
 </head>
 <body>
@@ -30,7 +32,7 @@
         <div class="wrapper wrapper--w680">
             <div class="card card-4">
                 <div class="card-body">
-                    <h2 class="title text-center">Распознование номера по фото</h2>
+                    <h2 class="title text-center">Поиск авто</h2>
                     <form method="post" onsubmit="return validateForm()">
                         <div class="form-group">
                             <label for="LicensePlate">Для поиска оставьте только один номер:</label>
@@ -43,10 +45,14 @@
                             }
                         </div>
 
-                        <div class="mt-3 d-flex">
-                            <input type="submit" value="Поиск" class="btn btn-success me-2 text-nowrap">
-                            <a class="btn btn-primary text-nowrap" asp-action="Cars">Отмена</a>
+                        <div class="mt-3 d-grid justify-content-center flex-wrap align-items-stretch">
+                            <div class="buttons-frame">
+                                <input type="submit" value="Поиск" class="btn btn-sm btn-success me-2 mb-2 text-nowrap">
+                                <a class="btn btn-sm btn-primary text-nowrap mb-2" asp-action="Cars">Отмена</a>
+                            </div>
                         </div>
+
+
                     </form>
 
                     <script>

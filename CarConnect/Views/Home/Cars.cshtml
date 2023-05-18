@@ -32,12 +32,14 @@
             background: -o-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
             background: linear-gradient(to top right, #fc2c77 0%, #6c4079 100%);
         }
+
+        }
     </style>
 </head>
 
 <body>
     <div class="text-center">
-        <div class="btn-group">
+        <div class="btn-group flex-wrap">
             @if (Program.User == null)
             {
                 <a class="btn btn-success mx-2 mb-3 text-nowrap" asp-action="Enter">
@@ -62,8 +64,8 @@
             @foreach (var item in Model)
             {
                 <div class="col-md-4">
-                    <div class="card rounded-2 mb-3">
-                        <img src="@item.Path" class="card-img-top" height="300">
+                    <div class="card rounded-2 mb-3" style="min-height: 600px;">
+                        <img src="@item.Path" class="card-img-top">
 
                         <div class="card-body">
                             <h5 class="card-title">Номер: @Html.DisplayFor(modelItem => item.LicensePlate)</h5>
@@ -71,17 +73,18 @@
                             <p class="card-text">Модель: @Html.DisplayFor(modelItem => item.Model)</p>
                             <p class="card-text">Год: @Html.DisplayFor(modelItem => item.Year.Year)</p>
                             <p class="card-text">Цвет: @Html.DisplayFor(modelItem => item.Colour)</p>
-                            <div style="margin-top: 50px;">
-                                <a class="btn btn-primary btn-sm text-nowrap" asp-action="CarView" asp-route-LicensePlate="@item.LicensePlate">Детали</a>
-                                @if (Program.User == null)
-                                {
-                                    <a class="btn btn-primary btn-sm text-nowrap" asp-action="Enter">Отзывы</a>
-                                }
-                                else
-                                {
-                                    <a class="btn btn-primary btn-sm text-nowrap" asp-action="CarViewReview" asp-route-LicensePlate="@item.LicensePlate">Отзывы</a>
-                                }
-                            </div>
+
+                        </div>
+                        <div style="margin-top: auto; margin-bottom: 10px;" class="flex-wrap">
+                            <a class="btn btn-primary btn-sm text-nowrap mb-2" style="min-width: 170px" asp-action="CarView" asp-route-LicensePlate="@item.LicensePlate">Детали</a>
+                            @if (Program.User == null)
+                            {
+                                <a class="btn btn-primary btn-sm text-nowrap mb-2" style="min-width: 170px" asp-action="Enter">Отзывы</a>
+                            }
+                            else
+                            {
+                                <a class="btn btn-primary btn-sm text-nowrap mb-2" style="min-width: 170px" asp-action="CarViewReview" asp-route-LicensePlate="@item.LicensePlate">Отзывы</a>
+                            }
                         </div>
                     </div>
                 </div>
@@ -89,4 +92,3 @@
         </div>
     </div>
 </body>
-<htmk>

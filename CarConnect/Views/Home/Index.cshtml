@@ -17,21 +17,21 @@
     </style>
 </head>
 
-<div class="page-wrapper p-t-50 p-b-150 font-robo">
-    <div class="wrapper wrapper--w960">
-        <div class="card card-1">
-            <div class="card-body">
-                <div class="photo-grid">
-                    @for (int i = 1; i <= 25; i++)
-                    {
-                         <div class="photo-tile">
-                            <img src="@Url.Content("~/images/url" + i + ".jpg")" alt="Photo @(i)" />
-                        </div>
-                    }
-                </div>  
+<body>
+    <div class="page-wrapper p-t-50 p-b-150 font-robo">
+        <div class="wrapper wrapper--w960">
+            <div class="card card-1">
+                <div class="card-body">
+                    <div class="photo-grid">
+                        @for (int i = 1; i <= 25; i++)
+                        {
+                            <div class="photo-tile">
+                                <img src="@Url.Content("~/images/url" + i + ".jpg")" alt="Photo @(i)" />
+                            </div>
+                        }
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
-
+</body>

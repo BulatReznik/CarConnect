@@ -12,6 +12,10 @@
         public string? FileName { get; set; }
         public string? Path { get; set; }
         public int UserId { get; set; }
+        public string? UserName { get; set; }
+        public string? UserEmail { get; set; }
+        public string? UserPhone { get; set; }
+        public virtual User User { get; set; }
 
     }
 }

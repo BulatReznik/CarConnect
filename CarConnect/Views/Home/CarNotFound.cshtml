@@ -17,15 +17,17 @@
 
 <body>
     <div class="text-center">
-        <div class="page-wrapper p-t-50 p-b-100 lr-10 font-robo">
+        <div class="page-wrapper p-t-50 p-b-100 lr-10 font-robo ">
             <div class="wrapper wrapper--w680">
                 <div class="card card-4">
                     <div class="card-body">
                         <h1 style="margin-bottom: 30px;">Мы не нашли автомобиль с таким номером в базе</h1>
                         <p>К сожалению, по указанному номеру автомобиля нет соответствующей записи в нашей базе данных.</p>
                         <p style="margin-bottom: 30px;">Пожалуйста, проверьте правильность введенного номера и попробуйте снова или добавьте свое авто с этим номером.</p>
-                        <a class="btn btn-primary text-nowrap me-2" asp-action="SearchGet">Вернуться к поиску</a>
+                        <div class="flex-wrap">
+                        <a class="btn btn-primary text-nowrap me-2 mb-2" asp-action="SearchGet">Вернуться к поиску</a>
                         <a class="btn btn-primary text-nowrap" asp-action="CarCreate">Добавить новое авто</a>
+                        </div>
                     </div>
                 </div>
             </div>

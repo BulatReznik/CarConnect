@@ -1,16 +1,25 @@
 ﻿@{
     ViewData["Title"] = "Добавление автомобиля";
 }
-<style>
+<head>
+    <link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
 
-    body {
-        background: -webkit-gradient(linear, left bottom, right top, from(#fc2c77), to(#6c4079));
-        background: -webkit-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
-        background: -moz-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
-        background: -o-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
-        background: linear-gradient(to top right, #fc2c77 0%, #6c4079 100%);
-    }
-</style>
+    <style>
+        body {
+            background: -webkit-gradient(linear, left bottom, right top, from(#fc2c77), to(#6c4079));
+            background: -webkit-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+            background: -moz-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+            background: -o-linear-gradient(bottom left, #fc2c77 0%, #6c4079 100%);
+            background: linear-gradient(to top right, #fc2c77 0%, #6c4079 100%);
+        }
+
+        .buttons-frame {
+            display: flex;
+            flex-direction: row;
+        }
+    </style>
+</head>
+
 <body>
     <div class="page-wrapper p-t-50 p-b-100 lr-10 font-robo">
         <div class="wrapper wrapper--w680">
@@ -66,9 +75,11 @@
                         </div>
 
 
-                        <div class="mt-3 d-flex">
-                            <input type="submit" value="Добавить" class="btn btn-success me-2">
-                            <a class="btn btn-primary text-nowrap" asp-action="Index">Отмена</a>
+                        <div class="mt-3 d-flex flex-wrap">
+                            <div class="buttons-frame">
+                                <input type="submit" value="Добавить" class="btn btn-success me-2">
+                                <a class="btn btn-primary text-nowrap" asp-action="Index">Отмена</a>
+                            </div>
                         </div>
 
                     </form>

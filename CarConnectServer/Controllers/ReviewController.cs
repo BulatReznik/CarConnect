@@ -27,7 +27,7 @@ namespace CarConnectServer.Controllers
         {
             var car = _carLogic.Read(new CarBindingModel { LicensePlate = LicensePlate });
             var carViewModel = car.FirstOrDefault(); // Получаем первый элемент списка CarViewModel
-            
+
             if (carViewModel == null)
             {
                 // Обработка случая, когда автомобиль не найден
@@ -45,6 +45,9 @@ namespace CarConnectServer.Controllers
                 Colour = carViewModel.Colour,
                 FileName = carViewModel.FileName,
                 Path = carViewModel.Path,
+                UserName = carViewModel.UserName,
+                UserPhone = carViewModel.UserPhone,
+                UserEmail = carViewModel.UserEmail,
                 Reviews = reviews
             };
 
@@ -66,6 +69,6 @@ namespace CarConnectServer.Controllers
         [HttpGet]
         public List<ReviewViewModel> GetCarReviewList(int carId) => _reviewLogic.Read(new ReviewBindingModel { CarId = carId });
 
-        
+
     }
 }

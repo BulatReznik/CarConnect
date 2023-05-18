@@ -243,7 +243,11 @@ namespace CarConnect.Controllers
                     Colour = Colour,
                     FileName = uploadedFile.FileName,
                     Path = path,
-                    UserId = (int)Program.User.Id
+                    UserId = (int)Program.User.Id,
+                    UserName = Program.User.FirstName,
+                    UserPhone = Program.User.PhoneNumber,
+                    UserEmail = Program.User.Email
+
                 };
 
                 APIClient.PostRequest("api/car/createorupdatecar", car);
@@ -327,7 +331,11 @@ namespace CarConnect.Controllers
                     LicensePlate = LicensePlate,
                     Colour = Colour,
                     FileName = filename,
-                    Path = path
+                    Path = path,
+                    UserId = (int)Program.User.Id,
+                    UserName = Program.User.FirstName,
+                    UserPhone = Program.User.PhoneNumber,
+                    UserEmail = Program.User.Email
                 };
 
                 APIClient.PostRequest("api/car/createorupdatecar", newcar);

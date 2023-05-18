@@ -21,16 +21,17 @@
         .text-center {
             margin-top: 20px;
         }
+
+
     </style>
 </head>
 
 <body>
     <div class="text-center">
         <div class="d-flex justify-content-center mb-3">
-            
         </div>
 
-        <div class="btn-group">
+        <div class="btn-group flex-wrap">
             <a class="btn btn-success mb-3" asp-action="CarCreate">
                 <i class="fas fa-car"></i> Добавить авто
             </a>
@@ -43,8 +44,8 @@
             @foreach (var item in Model)
             {
                 <div class="col-md-4">
-                    <div class="card rounded-2 mb-3">
-                        <img src="@item.Path" class="card-img-top" height="300">
+                    <div class="card rounded-2 mb-3" style="min-height: 600px;">
+                        <img src="@item.Path" class="card-img-top">
 
                         <div class="card-body">
                             <h5 class="card-title">Номер: @Html.DisplayFor(modelItem => item.LicensePlate)</h5>
@@ -53,10 +54,10 @@
                             <p class="card-text">Год: @Html.DisplayFor(modelItem => item.Year.Year)</p>
                             <p class="card-text">Цвет: @Html.DisplayFor(modelItem => item.Colour)</p>
                             <p class="card-text">VIN-номер: @Html.DisplayFor(modelItem => item.VIN)</p>
-                            <div style="margin-top: 50px;">
-                                <a class="btn btn-primary btn-sm text-nowrap" href="@Url.Action("CarUpdate", new { carId = item.Id, carBrand = item.Brand, carModel = item.Model })">Изменить</a>
-                                <a class="btn btn-danger btn-sm text-nowrap" href="@Url.Action("CarDelete", new { carId = item.Id })">Удалить</a>
-                            </div>
+                        </div>
+                        <div style="margin-top: auto; margin-bottom: 10px;" class="flex-wrap">
+                            <a class="btn btn-primary btn-sm mb-2 text-nowrap" style="min-width: 190px" href="@Url.Action("CarUpdate", new { carId = item.Id, carBrand = item.Brand, carModel = item.Model })">Изменить</a>
+                            <a class="btn btn-danger btn-sm mb-2 text-nowrap" style="min-width: 190px" href="@Url.Action("CarDelete", new { carId = item.Id })">Удалить</a>
                         </div>
                     </div>
                 </div>
