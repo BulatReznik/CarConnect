@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\css\new.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Emgu.CV" Version="4.7.0.5276" />
     <PackageReference Include="Emgu.CV.Bitmap" Version="4.7.0.5276" />
     <PackageReference Include="Emgu.CV.runtime.windows" Version="4.7.0.5276" />
@@ -50,6 +54,10 @@
     <None Include="wwwroot\vendor\mdi-font\fonts\Material-Design-Iconic-Font.woff2" />
     <None Include="wwwroot\vendor\select2\select2.min.css" />
     <None Include="wwwroot\vendor\select2\select2.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="wwwroot\css\new.css" />
   </ItemGroup>
 
 </Project>

@@ -6,10 +6,13 @@
     <title>@ViewData["Title"] - CarConnect</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/new.css" asp-append-version="true" />
     <link rel="manifest" href="/site.webmanifest">
+
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
+
         body {
             font-family: 'Roboto', sans-serif;
             font-size: 100%;
@@ -31,12 +34,15 @@
     </style>
 </head>
 <body>
-    <header>
+    <header style="z-index: 2;
+            position: fixed;
+            width: 100%;
+            top: 0;">
 
-        <nav class="navbar navbar-expand-sm navbar-dark p-3 bg-dark" id="headerNav">
+        <nav class="navbar navbar-expand-sm navbar-dark p-3 bg-dark" id="headerNav" style="">
             <div class="container-fluid">
                 <a class="navbar-brand d-block d-lg-none" href="#">
-                    <img src="/images/CarConnect.png" height="150" />
+                    <img src="/images/CarConnect.png" height="80" />
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -50,13 +56,13 @@
                         <li class="nav-item">
                             <a class="nav-link mx-2" asp-area="" asp-controller="Home" asp-action="Cars">Автомобили</a>
                         </li>
-                        <li class="nav-item d-none d-lg-block">
-                            <a class="nav-link mx-2" href="#">
-                                <img src="/images/CarConnect.png" height="150" />
+                        <li class="nav-item d-none d-lg-block text-align: center;">
+                            <a class="nav-link mx-5" href="#">
+                                <img src="/images/CarConnect.png" height="80" />
                             </a>
                             @if (Program.User != null)
                             {
-                                <p class="navbar-text mx-2 text-center">@Program.User.FirstName @Program.User.LastName</p>
+                                <p class="navbar-text mx-2">@Program.User.FirstName @Program.User.LastName</p>
                             }
                         </li>
                         <li class="nav-item">
@@ -99,11 +105,22 @@
 
     </header>
 
-    <div class="container-xxl">
-        <main role="main">
+    @if (Program.User == null)
+    {
+        <div class="container-xxl">
+            <main role="main" style="padding-top: 130px;">
             @RenderBody()
         </main>
-    </div>
+        </div>
+    }
+    else
+    {
+        <div class="container-xxl">
+            <main role="main" style="padding-top: 180px;">
+                @RenderBody()
+            </main>
+        </div>
+    }
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

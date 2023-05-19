@@ -1,8 +1,5 @@
-﻿@{
-    ViewData["Title"] = "Регистрация";
-}
-
-
+﻿<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>@ViewData["Title"]</title>
@@ -21,9 +18,9 @@
             color: #fff;
         }
 
-        .btn--blue:hover {
+            .btn--blue:hover {
                 background-color: #428bff;
-        }
+            }
 
         .row::after {
             content: "";
@@ -49,7 +46,7 @@
             <div class="card card-4">
                 <div class="card-body">
                     <h2 class="title text-center">Регистрация</h2>
-                    <form method="post">
+                    <form method="post" onsubmit="return validateForm()">
                         <div class="form-group required">
                             <div class="row row-space">
                                 <div class="col-2">
@@ -127,4 +124,32 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function validateForm() {
+            // Получение значений полей формы
+            var firstName = document.forms[0]["FirstName"].value;
+            var lastName = document.forms[0]["LastName"].value;
+            var middleName = document.forms[0]["MidleName"].value;
+            var email = document.forms[0]["Email"].value;
+            var phoneNumber = document.forms[0]["PhoneNumber"].value;
+            var password = document.forms[0]["Password"].value;
+            var confirmPassword = document.forms[0]["ConfirmPassword"].value;
+
+            // Проверка полей на пустоту
+            if (firstName === "" || lastName === "" || middleName === "" || email === "" || phoneNumber === "" || password === "" || confirmPassword === "") {
+                alert("Пожалуйста, заполните все обязательные поля.");
+                return false;
+            }
+
+            // Проверка пароля и его подтверждения
+            if (password !== confirmPassword) {
+                alert("Пароли не совпадают.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
 </body>
+</html>
