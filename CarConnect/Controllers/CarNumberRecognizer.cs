@@ -61,9 +61,6 @@ namespace CarConnectBusinessLogic.BusinessLogics
                         // Находим номерные знаки на изображении и добавляем их в список licenses.
                         FindPlate(contours, hierachy, 0, gray, canny, licensePlateImageList, filtredLicensesPlateImageList, detectedLicensePlateRegionList, licenses);
 
-                        //CascadeClassifier Classifier = new(@"C:\Users\73bul\source\repos\CarCheck2\CarCheck2\TestData\haarcascade_russian_plate_number.xml");
-                        //Classifier.DetectMultiScale(image);
-                        //Console.WriteLine(Classifier.ToString());
                     }
                 }
             }
