@@ -68,7 +68,9 @@
                         <img src="@item.Path" class="card-img-top" height="280">
 
                         <div class="card-body">
-                            <h5 class="card-title">Номер: @Html.DisplayFor(modelItem => item.LicensePlate)</h5>
+                            <div style="margin-bottom: 25px">
+                                <img src="~/Files/license_plate_@(item.LicensePlate).png">
+                            </div>
                             <p class="card-text">Бренд: @Html.DisplayFor(modelItem => item.Brand)</p>
                             <p class="card-text">Модель: @Html.DisplayFor(modelItem => item.Model)</p>
                             <p class="card-text">Год: @Html.DisplayFor(modelItem => item.Year.Year)</p>

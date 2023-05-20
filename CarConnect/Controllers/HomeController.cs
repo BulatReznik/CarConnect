@@ -19,6 +19,7 @@ namespace CarConnect.Controllers
             _logger = logger;
             _environment = environment;
             carCheck = new CarCheck();
+
         }
 
         public IActionResult Logout()
@@ -225,7 +226,8 @@ namespace CarConnect.Controllers
             if (Year != 0 || uploadedFile != null)
             {
                 DateTime date = new(Year, 1, 1);
-
+                NumberCreate numberCreate = new();
+                numberCreate.CreateLicensePlateImage(LicensePlate);
                 // путь к папке Files
                 string path = "/Files/" + uploadedFile.FileName;
                 // сохраняем файл в папку Files в каталоге wwwroot
@@ -306,6 +308,8 @@ namespace CarConnect.Controllers
             }
             if (carId != 0)
             {
+                NumberCreate numberCreate = new();
+                numberCreate.CreateLicensePlateImage(LicensePlate);
                 DateTime date = new(Year, 1, 1);
                 string filename = car.FileName;
                 string path = car.Path;
